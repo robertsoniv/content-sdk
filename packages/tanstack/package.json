@@ -1,0 +1,110 @@
+{
+  "name": "@sitecore-content-sdk/tanstack",
+  "version": "1.2.0-canary.24",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-esm.json",
+    "clean": "del-cli dist types",
+    "lint": "eslint \"./src/**/*.tsx\" \"./src/**/*.ts\"",
+    "test": "mocha --require ./test/setup.js \"./src/**/*.test.ts\" \"./src/**/*.test.tsx\" --exit",
+    "prepublishOnly": "npm run build",
+    "coverage": "nyc npm test",
+    "generate-docs": "npx typedoc --plugin typedoc-plugin-markdown --outputFileStrategy Members --parametersFormat table --readme none --out ../../ref-docs/tanstack --entryPoints src/index.ts --entryPoints src/monitoring/index.ts --entryPoints src/editing/index.ts --entryPoints src/middleware/index.ts --entryPoints src/utils/index.ts --entryPoints src/site/index.ts --entryPoints src/client/index.ts --entryPoints src/tools/index.ts --entryPoints src/codegen/index.ts --entryPoints src/route-handler/index.ts --githubPages false"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "author": {
+    "name": "Sitecore Corporation",
+    "url": "https://doc.sitecore.com/xmc/en/developers/content-sdk/index.html"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://doc.sitecore.com/xmc/en/developers/content-sdk/index.html",
+  "bugs": {
+    "url": "https://github.com/sitecore/content-sdk/issues"
+  },
+  "devDependencies": {
+    "@sitecore-cloudsdk/core": "^0.5.1",
+    "@sitecore-cloudsdk/personalize": "^0.5.1",
+    "@stylistic/eslint-plugin": "^5.2.2",
+    "@tanstack/react-router": "^1.80.0",
+    "@tanstack/react-start": "^1.80.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/chai": "^5.2.2",
+    "@types/chai-string": "^1.4.5",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "~22.15.14",
+    "@types/proxyquire": "^1.3.31",
+    "@types/react": "^19.1.3",
+    "@types/react-dom": "^19.1.3",
+    "@types/sinon": "^17.0.4",
+    "@types/sinon-chai": "^3.2.9",
+    "@typescript-eslint/eslint-plugin": "8.39.0",
+    "@typescript-eslint/parser": "8.39.0",
+    "chai": "^4.4.1",
+    "chai-string": "^1.6.0",
+    "chalk": "^4.1.2",
+    "cross-fetch": "^4.1.0",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsdoc": "52.0.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "glob": "^11.0.2",
+    "jsdom": "^26.1.0",
+    "mocha": "^11.2.2",
+    "nock": "14.0.0-beta.7",
+    "nyc": "^17.1.0",
+    "prettier": "^2.8.0",
+    "proxyquire": "^2.1.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sinon": "^20.0.0",
+    "sinon-chai": "^3.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.8.3",
+    "vite": "^6.0.0"
+  },
+  "peerDependencies": {
+    "@sitecore-cloudsdk/core": "^0.5.1",
+    "@sitecore-cloudsdk/events": "^0.5.1",
+    "@sitecore-cloudsdk/personalize": "^0.5.1",
+    "@tanstack/react-router": "^1.80.0",
+    "@tanstack/react-start": "^1.80.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.4.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@babel/parser": "^7.27.2",
+    "@sitecore-content-sdk/core": "1.2.0-canary.24",
+    "@sitecore-content-sdk/react": "1.2.0-canary.24",
+    "recast": "^0.23.11",
+    "regex-parser": "^2.3.1",
+    "sync-disk-cache": "^2.1.0"
+  },
+  "description": "Sitecore Content SDK for TanStack Start applications",
+  "types": "types/index.d.ts",
+  "gitHead": "2f4820efddf4454eeee58ed1b2cc251969efdf5b",
+  "files": [
+    "dist",
+    "types",
+    "/*.js",
+    "/*.d.ts"
+  ]
+}
