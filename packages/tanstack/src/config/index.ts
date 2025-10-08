@@ -1,9 +1,3 @@
 // Configuration utilities for TanStack Start
-export interface TanstackConfig {
-  apiHost: string;
-  siteName: string;
-  apiKey?: string;
-  baseUrl?: string;
-  enableClientRouting?: boolean;
-  enablePrefetching?: boolean;
-}
+export { defineConfig, getTanStackFallbackConfig } from './define-config';
+export type { SitecoreConfigInput, SitecoreConfig } from './define-config';

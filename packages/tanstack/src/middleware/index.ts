@@ -6,12 +6,14 @@ export { MultisiteMiddleware } from './multisite-middleware';
 export { SitemapMiddleware } from './sitemap-middleware';
 export { RobotsMiddleware } from './robots-middleware';
 export { LocaleMiddleware } from './locale-middleware';
+export { createTanstackMiddleware, createSitecoreMiddleware } from './tanstack-middleware';
 
 export type { MiddlewareBaseConfig } from './middleware';
 export type { RedirectsMiddlewareConfig } from './redirects-middleware';
 export type { PersonalizeMiddlewareConfig } from './personalize-middleware';
 export type { MultisiteMiddlewareConfig } from './multisite-middleware';
 export type { LocaleMiddlewareConfig } from './locale-middleware';
+export type { TanstackMiddlewareConfig } from './tanstack-middleware';
 
 export { PersonalizeService } from '@sitecore-content-sdk/core/personalize';
 
