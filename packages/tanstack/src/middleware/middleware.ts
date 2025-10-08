@@ -63,9 +63,47 @@ export abstract class MiddlewareBase extends Middleware {
    */
   protected isPreview(req: Request) {
     const url = new URL(req.url);
+    
+    // Enhanced preview detection with multiple strategies
     return !!(
-      url.searchParams.get('__prerender_bypass') || url.searchParams.get('__next_preview_data')
+      // Next.js compatibility
+      url.searchParams.get('__prerender_bypass') || 
+      url.searchParams.get('__next_preview_data') ||
+      
+      // Custom preview parameters
+      url.searchParams.get('preview') === 'true' ||
+      url.searchParams.get('sc_preview') === 'true' ||
+      
+      // Sitecore-specific preview
+      url.searchParams.get('sc_itemid') || // Sitecore item preview
+      url.searchParams.get('sc_mode') === 'preview' ||
+      
+      // Preview cookie check
+      this.isPreviewFromCookie(req)
     );
+  }
+
+  /**
+   * Checks if preview mode is enabled via cookie
+   * @param {Request} req request
+   * @returns {boolean} is preview from cookie
+   */
+  private isPreviewFromCookie(req: Request): boolean {
+    const cookieHeader = req.headers.get('cookie');
+    if (!cookieHeader) {
+      return false;
+    }
+    
+    const cookies = cookieHeader
+      .split(';')
+      .map(c => c.trim())
+      .reduce((acc, cookie) => {
+        const [name, value] = cookie.split('=');
+        acc[name] = value;
+        return acc;
+      }, {} as Record<string, string>);
+    
+    return cookies['__preview'] === 'true';
   }
 
   /**

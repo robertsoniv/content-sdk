@@ -200,6 +200,8 @@ export {
   SitemapMiddleware,
   RobotsMiddleware,
   LocaleMiddleware,
+  createTanstackMiddleware,
+  createSitecoreMiddleware,
 } from './middleware';
 
 export type {
@@ -207,6 +209,7 @@ export type {
   PersonalizeMiddlewareConfig,
   MultisiteMiddlewareConfig,
   LocaleMiddlewareConfig,
+  TanstackMiddlewareConfig,
 } from './middleware';
 
 // Export route handlers
@@ -230,3 +233,16 @@ export { TanstackSiteService } from './site';
 
 // Export utils
 export { TanstackUtils } from './utils';
+
+// Export config functionality
+export { defineConfig, getTanStackFallbackConfig } from './config';
+export type { SitecoreConfigInput, SitecoreConfig } from './config';
+
+// Export CLI config functionality
+export { defineCliConfig } from './config-cli';
+
+// Export preview functionality
+export * from './preview';
+
+// Export tools functionality
+export { generateMap, defaultTemplate, byocTemplate, generateSites } from './tools';
