@@ -48,6 +48,13 @@ export { PageMode, ErrorPage, Page } from '@sitecore-content-sdk/core/client';
 // Re-export editing functionality
 export { ComponentLayoutService } from '@sitecore-content-sdk/core/editing';
 
+// Export TanStack-specific editing middleware
+export {
+  EditingRenderMiddleware,
+  EditingConfigMiddleware,
+  FEAASRenderMiddleware,
+} from './editing';
+
 // Re-export media functionality
 export { mediaApi } from '@sitecore-content-sdk/core/media';
 
@@ -224,9 +231,9 @@ export {
 export { createHealthCheckMiddleware } from './monitoring';
 
 // Export client
-export { TanstackContentSdkClient } from './client';
+export { SitecoreTanstackClient, SitecoreClient } from './client';
 
-export type { TanstackContentSdkClientConfig } from './client';
+export type { SitecoreTanstackClientConfig } from './client';
 
 // Export site service
 export { TanstackSiteService } from './site';
