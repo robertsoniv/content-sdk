@@ -1,10 +1,10 @@
-import { LayoutServiceConfig } from '@sitecore-content-sdk/core/layout';
+import { SitecoreClientInit } from '@sitecore-content-sdk/core/client';
 
-export type TanstackContentSdkClientConfig = LayoutServiceConfig & {
-  /**
-   * Site name for the application
-   */
-  siteName: string;
+/**
+ * TanStack-specific client initialization options
+ * Extends the core SitecoreClientInit with TanStack-specific options
+ */
+export type SitecoreTanstackClientConfig = SitecoreClientInit & {
   /**
    * Base URL for the application
    */
@@ -20,3 +20,6 @@ export type TanstackContentSdkClientConfig = LayoutServiceConfig & {
    */
   enablePrefetching?: boolean;
 };
+
+// Re-export SitecoreClientInit for convenience
+export type { SitecoreClientInit };

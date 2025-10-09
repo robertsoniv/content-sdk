@@ -26,12 +26,7 @@ export type ComponentPropsFetchFunction = (
 export type GetComponentServerProps = ComponentPropsFetchFunction;
 
 export type ComponentPropsCollection = {
-  [componentName: string]: Record<string, unknown>;
+  [componentUid: string]: unknown | ComponentPropsError;
 };
 
-export class ComponentPropsError extends Error {
-  constructor(message: string, public componentName: string, public originalError?: Error) {
-    super(message);
-    this.name = 'ComponentPropsError';
-  }
-}
+export type ComponentPropsError = { error: string; componentName: string };
