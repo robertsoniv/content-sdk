@@ -119,76 +119,16 @@ export class EditingConfigMiddleware {
   private generateConfigData(): object {
     const { components, metadata } = this.config;
 
-    // Convert components map to array format expected by Sitecore
-    const componentList = Array.from(components.entries()).map(([name, component]) => ({
-      name,
-      displayName: name, // Use component name as display name
-      description: '', // No description available in TanstackContentSdkComponent
-      fields: this.extractComponentFields(component),
-      placeholders: this.extractComponentPlaceholders(component),
-    }));
+    // Get component names for Sitecore
+    const componentList = Array.from(components.keys());
 
     return {
       components: componentList,
-      metadata: {
-        name: 'TanStack Application',
-        version: '1.0.0',
-        description: 'TanStack Start application with Sitecore Content SDK',
-        author: 'Sitecore',
-        framework: 'TanStack Start',
-        packages: metadata.packages, // Include the actual packages metadata
-        features: {
-          serverSideRendering: true,
-          staticGeneration: true,
-          previewMode: true,
-          editingMode: true,
-          personalization: true,
-          multisite: true,
-        },
-      },
-      capabilities: {
-        editMode: EditMode.Metadata,
-        previewMode: true,
-        designLibrary: true,
-        personalization: true,
-        multisite: true,
-      },
-      endpoints: {
-        render: '/api/editing/render',
-        config: '/api/editing/config',
-        feaas: '/api/editing/feaas',
-      },
+      packages: metadata.packages,
+      editMode: EditMode.Metadata,
     };
   }
 
-  /**
-   * Extracts field information from a component
-   * @param {TanstackContentSdkComponent} component component definition
-   * @returns {object[]} array of field definitions
-   */
-  private extractComponentFields(component: TanstackContentSdkComponent): object[] {
-    // This is a simplified implementation
-    // In a real implementation, you might want to analyze the component's props
-    // or use TypeScript reflection to get field information
-    return Object.keys(component.fields || {}).map(fieldName => ({
-      name: fieldName,
-      type: 'text', // Default type, could be determined from field metadata
-      required: false,
-      displayName: fieldName,
-    }));
-  }
-
-  /**
-   * Extracts placeholder information from a component
-   * @param {TanstackContentSdkComponent} component component definition
-   * @returns {object[]} array of placeholder definitions
-   */
-  private extractComponentPlaceholders(_component: TanstackContentSdkComponent): object[] {
-    // This is a simplified implementation
-    // In a real implementation, you might want to analyze the component's JSX
-    // or use static analysis to find Placeholder components
-    return [];
-  }
 
   /**
    * Creates an error response

@@ -239,7 +239,13 @@ export type { SitecoreTanstackClientConfig } from './client';
 export { TanstackSiteService } from './site';
 
 // Export utils
-export { TanstackUtils } from './utils';
+export {
+  extractPath,
+  handleEditorFastRefresh,
+  getEditingSecret,
+  parseRewriteHeader,
+  TanstackUtils,
+} from './utils';
 
 // Export config functionality
 export { defineConfig, getTanStackFallbackConfig } from './config';
@@ -253,3 +259,6 @@ export * from './preview';
 
 // Export tools functionality
 export { generateMap, defaultTemplate, byocTemplate, generateSites } from './tools';
+
+// Export React Query hooks
+export * from './react-query';

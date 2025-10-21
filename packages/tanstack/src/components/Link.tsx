@@ -1,4 +1,4 @@
-import React, { forwardRef, JSX } from 'react';
+import React, { forwardRef } from 'react';
 import { Link as TanstackLink } from '@tanstack/react-router';
 import {
   Link as ReactLink,
@@ -25,7 +25,7 @@ export type LinkProps = ReactLinkProps & {
 const FILE_EXTENSION_MATCHER = /^\/.*\.\w+$/;
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  (props: LinkProps, ref): JSX.Element | null => {
+  (props: LinkProps, ref): React.ReactNode => {
     const {
       field,
       editable = true,
@@ -60,25 +60,22 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
           href + (querystring ? `?${querystring}` : '') + (anchor ? `#${anchor}` : '');
 
         return (
-          <TanstackLink
-            to={fullPath}
-            key="link"
-            title={value.title}
-            target={value.target}
-            className={value.class}
-            preload={props.preload}
-            {...htmlLinkProps}
-            ref={ref}
-            {...(process.env.TEST
+          (TanstackLink as any)({
+            to: fullPath,
+            key: "link",
+            title: value.title,
+            target: value.target,
+            className: value.class,
+            preload: props.preload,
+            ...htmlLinkProps,
+            ref: ref,
+            ...(process.env.TEST
               ? {
                   'data-tanstack-link': true,
                   'data-tanstack-preload': props.preload,
                 }
-              : {})}
-          >
-            {text}
-            {children}
-          </TanstackLink>
+              : {}),
+          }, text, children)
         );
       }
     }
