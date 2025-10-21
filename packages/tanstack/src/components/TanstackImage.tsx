@@ -1,4 +1,4 @@
-import React, { forwardRef, JSX } from 'react';
+import React, { forwardRef } from 'react';
 import {
   Image as ReactImage,
   ImageFieldValue,
@@ -20,7 +20,7 @@ export type TanstackImageProps = ReactImageProps & {
 };
 
 export const TanstackImage = forwardRef<HTMLImageElement, TanstackImageProps>(
-  (props: TanstackImageProps, ref): JSX.Element | null => {
+  (props: TanstackImageProps, ref): React.ReactNode => {
     const {
       field,
       editable = true,

@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "dev": "vite",
     "reset": "lerna clean --yes && yarn dlx rimraf node_modules && yarn install && yarn build",
     "build": "lerna run build",
     "lint-packages": "lerna run lint",

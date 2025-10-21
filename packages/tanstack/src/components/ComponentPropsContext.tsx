@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, ReactNode, JSX } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
 import { ComponentPropsCollection } from '../sharedTypes/component-props';
 
 /**
@@ -33,7 +33,7 @@ export type ComponentPropsContextProps = {
 export const ComponentPropsContext = ({
   children,
   value,
-}: ComponentPropsContextProps): JSX.Element => (
+}: ComponentPropsContextProps): React.ReactNode => (
   <ComponentPropsReactContext.Provider value={value}>
     {children}
   </ComponentPropsReactContext.Provider>

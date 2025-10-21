@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, JSX } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import {
   RichText as ReactRichText,
@@ -26,7 +26,7 @@ export type RichTextProps = ReactRichTextProps & {
 
 export const prefetched: { [cacheKey: string]: boolean } = {};
 
-export const RichText = (props: RichTextProps): JSX.Element => {
+export const RichText = (props: RichTextProps): React.ReactNode => {
   const {
     internalLinksSelector = 'a[href^="/"]',
     prefetchLinks = true,
