@@ -193,12 +193,15 @@ export const DesignLibrary = ({ loadImportMap }: DesignLibraryProps) => {
       // account for component being unmounted while resolving async import map
       if (cancelled) return;
 
-      unsubscribe = addComponentPreviewHandler(importMap, (error, Component) => {
-        // Error event is already sent in the addComponentPreviewHandler
-        if (error) return;
-        setComponent(() => Component as DynamicComponent);
-        setRenderKey((k) => k + 1);
-      });
+      unsubscribe = addComponentPreviewHandler(
+        importMap,
+        (error: unknown | null, Component: unknown) => {
+          // Error event is already sent in the addComponentPreviewHandler
+          if (error) return;
+          setComponent(() => Component as DynamicComponent);
+          setRenderKey((k) => k + 1);
+        }
+      );
 
       const importMapEvent = getDesignLibraryImportMapEvent(rendering.uid, importMap);
       postToDL(importMapEvent);

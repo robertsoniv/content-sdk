@@ -4,12 +4,20 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./types/index.d.ts"
+    }
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-esm.json",
+    "build": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-esm.json && npm run build:package-json",
+    "build:package-json": "echo '{\"type\":\"module\"}' > dist/esm/package.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
     "clean": "del-cli dist types",
     "lint": "eslint \"./src/**/*.tsx\" \"./src/**/*.ts\"",
     "test": "mocha --require ./test/setup.js \"./src/**/*.test.ts\" \"./src/**/*.test.tsx\" --exit",
@@ -81,6 +89,8 @@
   "gitHead": "2f4820efddf4454eeee58ed1b2cc251969efdf5b",
   "files": [
     "dist",
-    "types"
+    "types",
+    "dist/esm/package.json",
+    "dist/cjs/package.json"
   ]
 }

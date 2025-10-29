@@ -2,14 +2,15 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "preserve",
     "jsx": "react",
     "outDir": "dist/cjs",
     "strictNullChecks": false,
     "types": ["node", "mocha"],
     "typeRoots": ["node_modules/@types"],
     "declarationDir": "./types",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "bundler"
   },
   "exclude": [
     "node_modules",
@@ -22,3 +23,4 @@
     "**/*.test.tsx"
   ]
 }
+

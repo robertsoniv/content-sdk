@@ -17,7 +17,7 @@ process.on('unhandledRejection', (err) => {
 export default async function cli(commands?: {
   [key: string]: CommandModule & { disableStrictArgs?: boolean };
 }) {
-  let appCommands: Argv = yargs.usage('$0 <command>');
+  let appCommands: Argv = yargs().usage('$0 <command>');
 
   appCommands = appCommands.scriptName('sitecore-tools');
 
@@ -51,7 +51,7 @@ export default async function cli(commands?: {
         } else {
           console.error('No command provided');
         }
-        yargs.showHelp();
+        appCommands.showHelp();
         process.exit(1);
       },
     })
