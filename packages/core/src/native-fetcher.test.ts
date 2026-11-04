@@ -285,6 +285,76 @@ describe('NativeDataFetcher', () => {
       expect(fetchOverride).to.be.called;
     });
 
+    describe('Content-Type and debug redaction', () => {
+      let logged: string[];
+
+      beforeEach(() => {
+        // use real Headers so header values can be asserted
+        spy.restore(global, 'Headers');
+        spy.restore(debug.http);
+        logged = [];
+        spy.on(debug.http, 'log', (...args: unknown[]) => {
+          logged.push(args.map(String).join(' '));
+          return true;
+        });
+      });
+
+      it('should default Content-Type to application/json', async () => {
+        const fetcher = new NativeDataFetcher();
+        spy.on(global, 'fetch', mockFetch(200));
+
+        await fetcher.fetch('http://test.com/api', { method: 'POST', body: '{}' });
+        expect((fetchInit?.headers as Headers).get('Content-Type')).to.equal('application/json');
+      });
+
+      it('should preserve an explicit Content-Type', async () => {
+        const fetcher = new NativeDataFetcher();
+        spy.on(global, 'fetch', mockFetch(200));
+
+        await fetcher.fetch('http://test.com/api', {
+          method: 'POST',
+          headers: { 'content-type': 'application/x-www-form-urlencoded' },
+          body: 'grant_type=client_credentials',
+        });
+        expect((fetchInit?.headers as Headers).get('Content-Type')).to.equal(
+          'application/x-www-form-urlencoded'
+        );
+      });
+
+      it('should not log credentials from request headers, body, url or response data', async () => {
+        const fetcher = new NativeDataFetcher();
+        spy.on(
+          global,
+          'fetch',
+          mockFetch(200, { access_token: 'secret-at', refresh_token: 'secret-rt', ok: true })
+        );
+
+        await fetcher.fetch('http://test.com/api?anonUserToken=secret-anon', {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer secret-bearer',
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+          body: 'grant_type=password&username=u&password=secret-pw',
+        });
+
+        const output = logged.join('\n');
+        expect(logged.length).to.equal(2);
+        ['secret-at', 'secret-rt', 'secret-anon', 'secret-bearer', 'secret-pw'].forEach(
+          (secret) => expect(output, secret).not.to.include(secret)
+        );
+        expect(output).to.include('[REDACTED]');
+      });
+
+      it('should not log credentials from error responses', async () => {
+        const fetcher = new NativeDataFetcher();
+        spy.on(global, 'fetch', mockFetch(400, { refresh_token: 'secret-rt' }));
+
+        await fetcher.fetch('http://test.com/api').catch(() => undefined);
+        expect(logged.join('\n')).not.to.include('secret-rt');
+      });
+    });
+
     it('should handle response.json() error', async () => {
       const fetcher = new NativeDataFetcher();
 

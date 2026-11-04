@@ -7,6 +7,8 @@
 import { CacheClient } from '@sitecore-content-sdk/core';
 import { CacheOptions } from '@sitecore-content-sdk/core';
 import { ClientError } from '@sitecore-content-sdk/core';
+import { CommerceCookieOptions } from '@sitecore-content-sdk/commerce';
+import { CommerceError } from '@sitecore-content-sdk/commerce';
 import { ComponentFields } from '@sitecore-content-sdk/content/layout';
 import { ComponentParams } from '@sitecore-content-sdk/content/layout';
 import { ComponentRendering } from '@sitecore-content-sdk/content/layout';
@@ -50,6 +52,7 @@ import { LinkFieldValue } from '@sitecore-content-sdk/content/layout';
 import { mediaApi } from '@sitecore-content-sdk/content/media';
 import { MemoryCacheClient } from '@sitecore-content-sdk/core';
 import { MetadataFields } from '@sitecore-content-sdk/content/layout';
+import { MeUser } from '@sitecore-content-sdk/commerce';
 import { NativeDataFetcher } from '@sitecore-content-sdk/core';
 import { NativeDataFetcherConfig } from '@sitecore-content-sdk/core';
 import { NativeDataFetcherResponse } from '@sitecore-content-sdk/core';
@@ -58,6 +61,7 @@ import { OG_MODIFIED_TIME_TAG } from '@sitecore-content-sdk/content/layout';
 import { OpenGraphFields } from '@sitecore-content-sdk/content/layout';
 import { OpenGraphImageField } from '@sitecore-content-sdk/content/layout';
 import { OpenGraphImageFieldValue } from '@sitecore-content-sdk/content/layout';
+import { OrderCloudService } from '@sitecore-content-sdk/commerce';
 import { Page } from '@sitecore-content-sdk/content/client';
 import { PageMetadataFields } from '@sitecore-content-sdk/content/layout';
 import { PageMode } from '@sitecore-content-sdk/content/client';
@@ -71,6 +75,10 @@ import { RichTextField } from '@sitecore-content-sdk/content/layout';
 import { RouteData } from '@sitecore-content-sdk/content/layout';
 import { SearchDocument } from '@sitecore-content-sdk/search';
 import { SearchParameters } from '@sitecore-content-sdk/search';
+import { SessionChangeEvent } from '@sitecore-content-sdk/commerce';
+import { SessionChangeReason } from '@sitecore-content-sdk/commerce';
+import { ShopperSession } from '@sitecore-content-sdk/commerce';
+import { ShopperUserType } from '@sitecore-content-sdk/commerce';
 import { SitecoreConfig } from '@sitecore-content-sdk/content/config';
 import { SitePathService } from '@sitecore-content-sdk/content/site';
 import { SitePathServiceConfig } from '@sitecore-content-sdk/content/site';
@@ -132,6 +140,52 @@ export { CacheOptions }
 export const ClientEditingChromesUpdate: () => JSX_2.Element;
 
 export { ClientError }
+
+// @public
+export interface CommerceContextValue {
+    ensureSession(): Promise<ShopperSession>;
+    error: CommerceError | null;
+    isAnonymous: boolean;
+    isEditing: boolean;
+    lastSessionChange: SessionChangeEvent | null;
+    resetSession(): Promise<ShopperSession>;
+    service: OrderCloudService | null;
+    session: ShopperSession | null;
+    status: CommerceStatus;
+    userType: ShopperUserType | null;
+}
+
+export { CommerceCookieOptions }
+
+export { CommerceError }
+
+// @public
+export const CommerceProvider: {
+    (props: CommerceProviderProps): React_2.ReactElement;
+    displayName: string;
+};
+
+// @public
+export interface CommerceProviderProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    eager?: boolean;
+    tokens: CommerceTokenOptions;
+}
+
+// @public
+export type CommerceStatus = 'idle' | 'loading' | 'ready' | 'error';
+
+// @public
+export type CommerceTokenOptions = {
+    mode: 'route-handler';
+    endpoint?: string;
+    cookies?: CommerceCookieOptions;
+} | {
+    mode: 'browser';
+    refreshTokenStorage: 'memory' | 'cookie';
+    cookies?: CommerceCookieOptions;
+};
 
 export { ComponentFields }
 
@@ -376,6 +430,8 @@ export { MemoryCacheClient }
 
 export { MetadataFields }
 
+export { MeUser }
+
 export { NativeDataFetcher }
 
 export { NativeDataFetcherConfig }
@@ -396,6 +452,8 @@ export { OpenGraphFields }
 export { OpenGraphImageField }
 
 export { OpenGraphImageFieldValue }
+
+export { OrderCloudService }
 
 export { Page }
 
@@ -480,6 +538,14 @@ export { RouteData }
 // @public
 export type SearchStatus = 'idle' | 'loading' | 'success' | 'error';
 
+export { SessionChangeEvent }
+
+export { SessionChangeReason }
+
+export { ShopperSession }
+
+export { ShopperUserType }
+
 // @public
 export const SitecoreProvider: {
     (props: SitecoreProviderProps): React_2.JSX.Element;
@@ -510,6 +576,9 @@ const Text_2: React_2.FC<TextProps>;
 export { Text_2 as Text }
 
 export { TextField }
+
+// @public
+export function useCommerce(): CommerceContextValue;
 
 // @public
 export const useInfiniteSearch: <T extends SearchDocument = SearchDocument>(options: UseInfiniteSearchOptions<T>) => UseInfiniteSearchState<T>;
@@ -567,6 +636,35 @@ export type UseSearchState<T extends SearchDocument = SearchDocument> = Omit<Int
     isError: boolean;
     isPreviousData: boolean;
 };
+
+// @public
+export function useShopper(options?: UseShopperOptions): UseShopperState;
+
+// @public
+export interface UseShopperOptions {
+    enabled?: boolean;
+}
+
+// @public
+export interface UseShopperState {
+    // (undocumented)
+    error: CommerceError | null;
+    // (undocumented)
+    isAnonymous: boolean;
+    // (undocumented)
+    isError: boolean;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    isRegistered: boolean;
+    // (undocumented)
+    isSuccess: boolean;
+    refetch(): Promise<void>;
+    // (undocumented)
+    status: 'idle' | 'loading' | 'success' | 'error';
+    user: MeUser | null;
+    userType: ShopperUserType | null;
+}
 
 // Warning: (ae-forgotten-export) The symbol "UseSitecoreOptions" needs to be exported by the entry point api-surface.d.ts
 //

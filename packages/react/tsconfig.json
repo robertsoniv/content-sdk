@@ -17,6 +17,7 @@
     "typings",
     "dist",
     "search.d.ts",
+    "commerce.d.ts",
     "src/tests/*",
     "src/test-data/*",
     "**/*.test.ts",

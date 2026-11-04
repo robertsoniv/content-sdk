@@ -1,0 +1,78 @@
+{
+  "name": "@sitecore-content-sdk/commerce",
+  "version": "0.1.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./internal": {
+      "types": "./types/internal.d.ts",
+      "import": "./dist/esm/internal.js",
+      "require": "./dist/cjs/internal.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-esm.json",
+    "clean": "del-cli dist types",
+    "lint": "eslint \"./src/**/*.ts\"",
+    "test": "mocha \"./src/**/*.test.ts\"",
+    "prepublishOnly": "npm run build",
+    "coverage": "nyc npm test",
+    "generate-docs": "npx typedoc --plugin typedoc-plugin-markdown --outputFileStrategy Members --parametersFormat table --readme none --out ../../ref-docs/commerce --entryPoints src/index.ts --githubPages false",
+    "api-extractor": "npm run build && api-extractor run --local --verbose",
+    "api-extractor:verify": "api-extractor run"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "author": {
+    "name": "Sitecore Corporation",
+    "url": "https://doc.sitecore.com/xmc/en/developers/content-sdk/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sitecore/content-sdk.git",
+    "directory": "packages/commerce"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://doc.sitecore.com/xmc/en/developers/content-sdk/index.html",
+  "bugs": {
+    "url": "https://github.com/sitecore/content-sdk/issues"
+  },
+  "dependencies": {
+    "@sitecore-content-sdk/core": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^17.0.4",
+    "chai": "^6.2.1",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^61.4.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "mocha": "^11.7.5",
+    "nock": "^14.0.10",
+    "nyc": "^17.1.0",
+    "sinon": "^20.0.0",
+    "tsx": "^4.20.6",
+    "typescript": "~5.8.3"
+  },
+  "description": "Sitecore Content SDK commerce (OrderCloud) APIs: shopper token retrieval, storage and session management.",
+  "files": [
+    "dist",
+    "types",
+    "/*.d.ts"
+  ]
+}

@@ -19,6 +19,9 @@ import { CacheOptions } from '@sitecore-content-sdk/core';
 import { CdpHelper } from '@sitecore-content-sdk/content/personalize';
 import { ClientEditingChromesUpdate } from '@sitecore-content-sdk/react';
 import { combineImportEntries } from '@sitecore-content-sdk/content/tools';
+import { CommerceCookieOptions } from '@sitecore-content-sdk/commerce';
+import { CommerceProviderProps as CommerceProviderProps_2 } from '@sitecore-content-sdk/react/commerce';
+import { CommerceTokenOptions } from '@sitecore-content-sdk/react/commerce';
 import { ComponentFields } from '@sitecore-content-sdk/content/layout';
 import { ComponentFile } from '@sitecore-content-sdk/content/tools';
 import { ComponentImport } from '@sitecore-content-sdk/content/tools';
@@ -328,6 +331,26 @@ export type CollectSitecorePageCacheTagsParams = {
 
 export { combineImportEntries }
 
+// @public
+export const CommerceProvider: {
+    (input: CommerceProviderProps): React_2.ReactElement;
+    displayName: string;
+};
+
+// @public
+export type CommerceProviderProps = Omit<CommerceProviderProps_2, 'tokens'> & {
+    tokens?: CommerceTokenOptions;
+};
+
+// @public
+export interface CommerceTokenRouteHandlerOptions {
+    contextId: string;
+    cookies?: CommerceCookieOptions;
+    edgeUrl?: string;
+    scope?: string[];
+    timeout?: number;
+}
+
 export { ComponentFields }
 
 export { ComponentFile }
@@ -384,6 +407,12 @@ export class ComponentPropsService {
 export { ComponentRendering }
 
 export { constants }
+
+// @public
+export const createCommerceTokenRouteHandler: (options: CommerceTokenRouteHandlerOptions) => {
+    POST: (req: NextRequest) => Promise<NextResponse<unknown>>;
+    DELETE: (req: NextRequest) => Promise<NextResponse<unknown>>;
+};
 
 // Warning: (ae-forgotten-export) The symbol "EditingConfigRouteHandlerOptions" needs to be exported by the entry point api-surface.d.ts
 //
@@ -1276,6 +1305,7 @@ export const writeImportMap: (args: WriteImportMapArgs) => (input: {
 }) => Promise<void>;
 
 
+export * from "@sitecore-content-sdk/react/commerce";
 export * from "@sitecore-content-sdk/react/search";
 
 // Warnings were encountered during analysis:

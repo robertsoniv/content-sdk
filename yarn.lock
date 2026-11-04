@@ -5270,6 +5270,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@sitecore-content-sdk/commerce@npm:^0.1.0, @sitecore-content-sdk/commerce@workspace:packages/commerce":
+  version: 0.0.0-use.local
+  resolution: "@sitecore-content-sdk/commerce@workspace:packages/commerce"
+  dependencies:
+    "@sitecore-content-sdk/core": "npm:^2.1.4"
+    "@types/chai": "npm:^5.2.3"
+    "@types/mocha": "npm:^10.0.10"
+    "@types/sinon": "npm:^17.0.4"
+    chai: "npm:^6.2.1"
+    del-cli: "npm:^7.0.0"
+    eslint: "npm:^9.39.1"
+    eslint-plugin-import: "npm:^2.32.0"
+    eslint-plugin-jsdoc: "npm:^61.4.1"
+    eslint-plugin-prettier: "npm:^5.5.4"
+    mocha: "npm:^11.7.5"
+    nock: "npm:^14.0.10"
+    nyc: "npm:^17.1.0"
+    sinon: "npm:^20.0.0"
+    tsx: "npm:^4.20.6"
+    typescript: "npm:~5.8.3"
+  languageName: unknown
+  linkType: soft
+
 "@sitecore-content-sdk/content@npm:^2.4.0, @sitecore-content-sdk/content@workspace:packages/content":
   version: 0.0.0-use.local
   resolution: "@sitecore-content-sdk/content@workspace:packages/content"
@@ -5394,6 +5417,7 @@ __metadata:
   dependencies:
     "@babel/parser": "npm:^7.27.2"
     "@sitecore-content-sdk/analytics-core": "npm:^2.1.2"
+    "@sitecore-content-sdk/commerce": "npm:^0.1.0"
     "@sitecore-content-sdk/content": "npm:^2.4.0"
     "@sitecore-content-sdk/core": "npm:^2.1.4"
     "@sitecore-content-sdk/events": "npm:^2.1.2"
@@ -5488,6 +5512,7 @@ __metadata:
   resolution: "@sitecore-content-sdk/react@workspace:packages/react"
   dependencies:
     "@sitecore-content-sdk/analytics-core": "npm:^2.1.2"
+    "@sitecore-content-sdk/commerce": "npm:^0.1.0"
     "@sitecore-content-sdk/content": "npm:^2.4.0"
     "@sitecore-content-sdk/core": "npm:^2.1.4"
     "@sitecore-content-sdk/search": "npm:^0.5.0"

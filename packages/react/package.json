@@ -83,6 +83,7 @@
     "react-dom": "^19.2.1"
   },
   "dependencies": {
+    "@sitecore-content-sdk/commerce": "^0.1.0",
     "@sitecore-content-sdk/content": "^2.4.0",
     "@sitecore-content-sdk/core": "^2.1.4",
     "@sitecore-content-sdk/search": "^0.5.0",
@@ -106,6 +107,11 @@
       "types": "./types/search/index.d.ts",
       "import": "./dist/esm/search/index.js",
       "require": "./dist/cjs/search/index.js"
+    },
+    "./commerce": {
+      "types": "./types/commerce/index.d.ts",
+      "import": "./dist/esm/commerce/index.js",
+      "require": "./dist/cjs/commerce/index.js"
     }
   },
   "imports": {

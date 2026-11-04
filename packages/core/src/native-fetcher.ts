@@ -1,5 +1,6 @@
 import debuggers, { Debugger } from './debug';
 import TimeoutPromise from './tools/timeout-promise';
+import { hasHeader, redactBody, redactData, redactHeaders, redactUrl } from './tools/redact';
 
 export type NativeDataFetcherOptions = {
   /**
@@ -76,9 +77,10 @@ export class NativeDataFetcher {
     }
 
     debug('Request initiated: %o', {
-      url,
-      headers: this.extractDebugHeaders(requestInit.headers),
       ...requestInit,
+      url: redactUrl(url),
+      headers: redactHeaders(this.extractDebugHeaders(requestInit.headers)),
+      body: redactBody(requestInit.body),
     });
 
     try {
@@ -90,16 +92,16 @@ export class NativeDataFetcher {
       const respData = await this.parseResponse(response, debug);
       if (!response.ok) {
         const error = this.createError(response, respData);
-        debug('Response error: %o', error.response);
+        debug('Response error: %o', this.redactErrorResponse(error.response));
         throw error;
       }
 
       debug('Response in %dms: %o', Date.now() - startTimestamp, {
         status: response.status,
         statusText: response.statusText,
-        headers: this.extractDebugHeaders(response.headers),
-        url: response.url,
-        data: respData,
+        headers: redactHeaders(this.extractDebugHeaders(response.headers)),
+        url: redactUrl(response.url),
+        data: redactData(respData),
       });
 
       return {
@@ -110,7 +112,13 @@ export class NativeDataFetcher {
       };
     } catch (error) {
       this.abortTimeout?.clear();
-      debug('Request failed: %o', error);
+      const fetcherError = error as Partial<NativeDataFetcherError>;
+      debug(
+        'Request failed: %o',
+        fetcherError?.response
+          ? { ...fetcherError, response: this.redactErrorResponse(fetcherError.response) }
+          : error
+      );
       throw error;
     }
   }
@@ -187,7 +195,10 @@ export class NativeDataFetcher {
       init.method = init.body ? 'POST' : 'GET';
     }
 
-    headers.set('Content-Type', 'application/json');
+    // Preserve an explicitly provided Content-Type (e.g. form-encoded OAuth token requests)
+    if (!hasHeader(init.headers, 'Content-Type')) {
+      headers.set('Content-Type', 'application/json');
+    }
     init.headers = headers;
 
     return init;
@@ -253,6 +264,21 @@ export class NativeDataFetcher {
         headers: this.extractDebugHeaders(response.headers) as HeadersInit,
         data,
       },
+    };
+  }
+
+  /**
+   * Returns a copy of an error response safe for debug logging.
+   * @param {NativeDataFetcherResponse<unknown>} response error response
+   * @returns {NativeDataFetcherResponse<unknown>} redacted copy
+   */
+  private redactErrorResponse(
+    response: NativeDataFetcherResponse<unknown>
+  ): NativeDataFetcherResponse<unknown> {
+    return {
+      ...response,
+      headers: redactHeaders(response.headers as Record<string, string>) as HeadersInit,
+      data: redactData(response.data),
     };
   }
 }

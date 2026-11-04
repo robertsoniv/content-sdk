@@ -9,4 +9,8 @@ export {
   type SitecoreRevalidateRouteHandlerOptions,
   type RevalidateTagCacheProfile,
 } from './sitecore-revalidate-route-handler';
+export {
+  createCommerceTokenRouteHandler,
+  type CommerceTokenRouteHandlerOptions,
+} from './commerce-token-route-handler';
 

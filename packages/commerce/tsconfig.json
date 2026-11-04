@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2017",
+    "skipLibCheck": true,
+    "useUnknownInCatchVariables": false,
+    "module": "commonjs",
+    "outDir": "dist/cjs",
+    "rootDir": "src",
+    "typeRoots": ["node_modules/@types"],
+    "declarationDir": "./types"
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "types",
+    "dist",
+    "src/**/*.test.ts"
+  ]
+}
